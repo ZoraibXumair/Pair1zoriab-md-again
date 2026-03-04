@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZORAIB-MD | Pair & Deploy</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --neon: #00ffcc;
+      --pink: #ff2e63;
+      --dark: #0a0a0a;
+      --card: rgba(15,15,25,0.78);
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--neon);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: url('https://files.catbox.moe/8i7djw.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);   /* Dark overlay for readability - adjust 0.65 if needed */
+      z-index: -3;
+    }
+    #particles-js {
+      position: fixed;
+      width: 100%; height: 100%;
+      z-index: -2;
+    }
+    .cyber-grid {
+      position: fixed; inset: 0; z-index: -1;
+      background: 
+        linear-gradient(rgba(0,255,204,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,204,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: grid 70s linear infinite;
+      opacity: 0.25;
+    }
+    @keyframes grid { to { transform: translate(-60px, -60px); } }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 60px;
+      position: relative;
+      z-index: 1;
+      padding-top: 140px;
+    }
+    .hero {
+      text-align: center;
+      padding: 50px 30px;
+      background: var(--card);
+      border: 2px solid var(--neon);
+      border-radius: 20px;
+      box-shadow: 0 0 40px rgba(0,255,204,0.35);
+      backdrop-filter: blur(8px);
+    }
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.2rem;
+      background: linear-gradient(90deg, var(--pink), var(--neon));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+      text-shadow: 0 0 15px rgba(0,255,204,0.5);
+    }
+    .hero p {
+      font-size: 1.3rem;
+      max-width: 680px;
+      margin: 0 auto;
+      opacity: 0.95;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 35px;
+      width: 100%;
+    }
+    .card {
+      background: var(--card);
+      border: 2px solid var(--neon);
+      border-radius: 16px;
+      padding: 35px 25px;
+      text-align: center;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(8px);
+    }
+    .card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 50px rgba(0,255,204,0.5);
+      border-color: var(--pink);
+    }
+    .card i {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      color: var(--pink);
+      text-shadow: 0 0 15px rgba(255,46,99,0.6);
+    }
+    .card h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.9rem;
+      margin-bottom: 15px;
+      color: var(--neon);
+    }
+    .card p {
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      opacity: 0.9;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--neon);
+      border: 2px solid var(--neon);
+      border-radius: 10px;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.35s;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: rgba(0,255,204,0.15);
+      box-shadow: 0 0 30px rgba(0,255,204,0.7);
+      color: white;
+      border-color: white;
+      transform: scale(1.05);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 0.95rem;
+      opacity: 0.8;
+      border-top: 1px solid rgba(0,255,204,0.2);
+      margin-top: 40px;
+      width: 100%;
+    }
+
+    /* Floating Social Buttons - Neon Glow + Tooltip */
+    .floating-buttons {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .float-btn {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 30px;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .float-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .float-btn:hover::before {
+      opacity: 1;
+    }
+    .float-btn:hover {
+      transform: scale(1.2) translateY(-8px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.7), 0 0 40px var(--neon);
+    }
+    .float-btn span.tooltip {
+      position: absolute;
+      right: 80px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.9);
+      color: var(--neon);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      border: 1px solid var(--neon);
+    }
+    .float-btn:hover span.tooltip {
+      opacity: 1;
+      right: 90px;
+    }
+    .whatsapp { background: #25D366; box-shadow: 0 0 15px #25D36680; }
+    .whatsapp:hover { box-shadow: 0 0 40px #25D366; }
+    .facebook { background: #1877F2; box-shadow: 0 0 15px #1877F280; }
+    .facebook:hover { box-shadow: 0 0 40px #1877F2; }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.6rem; }
+      .container { padding-top: 160px; }
+      .floating-buttons { bottom: 20px; right: 20px; gap: 14px; }
+      .float-btn { width: 58px; height: 58px; font-size: 27px; }
+      .float-btn span.tooltip { font-size: 0.85rem; right: 75px; padding: 6px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="particles-js"></div>
+  <div class="cyber-grid"></div>
+
+  <!-- Floating Buttons -->
+  <div class="floating-buttons">
+    <a href="https://api.whatsapp.com/send?phone=+923xxxxxxxxx&text=Hello%20Zoraib-MD!%20Pair%20code%20ya%20deploy%20mein%20madad%20chahiye" target="_blank" class="float-btn whatsapp">
+      <i class="fab fa-whatsapp"></i>
+      <span class="tooltip">Chat on WhatsApp</span>
+    </a>
+    <a href="https://facebook.com/yourpage" target="_blank" class="float-btn facebook">
+      <i class="fab fa-facebook-f"></i>
+      <span class="tooltip">Follow on Facebook</span>
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="hero">
+      <h1>ZORAIB-MD ULTRA</h1>
+      <p>Pair Code Generate Karo ya Direct Deploy -- Fast, Secure aur Simple</p>
+    </div>
+
+    <div class="features">
+      <div class="card">
+        <i class="fas fa-key"></i>
+        <h2>Pair Code Generate</h2>
+        <p>Apna number daalo aur turant encrypted pair code mil jayega. No QR scan needed.</p>
+        <a href="/pair" class="btn">Generate Pair Code</a>
+      </div>
+
+      <div class="card">
+        <i class="fas fa-rocket"></i>
+        <h2>Deploy Zoraib-MD</h2>
+        <p>One-click setup -- Premium features ke saath apna bot minutes mein live.</p>
+        <a href="https://github.com/mrzoraibofc-commits/ZORAIB-MD" target="_blank" class="btn">Deploy Now</a>
+      </div>
+    </div>
+
+    <div class="footer">
+      © 2025 Zoraib-MD • Powered by Zoraib Kashmiri
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 60, density: { enable: true, value_area: 800 } },
+        color: { value: "#00ffcc" },
+        shape: { type: "circle" },
+        opacity: { value: 0.4, random: true },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 120, color: "#00ffcc", opacity: 0.25, width: 1 },
+        move: { enable: true, speed: 1.2, direction: "none", random: true, straight: false, out_mode: "out" }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
+        modes: { repulse: { distance: 80 }, push: { particles_nb: 4 } }
+      },
+      retina_detect: true
+    });
+  </script>
+
+</body>
+</html>

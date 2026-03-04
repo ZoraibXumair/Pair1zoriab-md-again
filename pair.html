@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>ZORAIB-MD | Pairing Code</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('https://files.catbox.moe/8i7djw.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Dark overlay for better readability + your image */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 15, 0.75);
+      z-index: -1;
+    }
+
+    .bg-gradient {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 40%, rgba(41, 196, 140, 0.12) 0%, transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(25, 118, 210, 0.12) 0%, transparent 60%);
+      z-index: 0;
+    }
+
+    .glow-orb {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.25;
+      z-index: 1;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .orb-1 {
+      top: -200px;
+      left: -200px;
+      background: linear-gradient(135deg, #29c48c 0%, #1976d2 100%);
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      bottom: -200px;
+      right: -200px;
+      background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+      animation-delay: -10s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(50px, -50px) scale(1.1); }
+      66% { transform: translate(-50px, 50px) scale(0.9); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 480px;
+      background: rgba(20, 20, 30, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding: 40px 30px;
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+      animation: slideIn 0.6s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #29c48c, #1976d2, transparent);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo-container {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 20px;
+      position: relative;
+    }
+
+    .logo-ring {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 3px solid transparent;
+      border-top-color: #29c48c;
+      border-right-color: #1976d2;
+      border-radius: 50%;
+      animation: spin 3s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .logo {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #29c48c 0%, #1976d2 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      color: white;
+      box-shadow: 0 10px 40px rgba(41, 196, 140, 0.4);
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #29c48c 0%, #1976d2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 400;
+    }
+
+    .info-box {
+      background: rgba(41, 196, 140, 0.1);
+      border: 1px solid rgba(41, 196, 140, 0.3);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .info-box i {
+      color: #29c48c;
+      font-size: 20px;
+      margin-top: 2px;
+    }
+
+    .info-box-text {
+      flex: 1;
+    }
+
+    .info-box-text strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+
+    .info-box-text p {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 500;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 18px;
+    }
+
+    .input {
+      width: 100%;
+      padding: 16px 20px 16px 55px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      color: white;
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+
+    .input:focus {
+      outline: none;
+      border-color: #29c48c;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 4px rgba(41, 196, 140, 0.1);
+    }
+
+    .input:focus + .input-icon {
+      color: #29c48c;
+    }
+
+    .input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .hint {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hint i {
+      font-size: 11px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-generate {
+      background: linear-gradient(135deg, #29c48c 0%, #1976d2 100%);
+      color: white;
+      box-shadow: 0 10px 30px rgba(41, 196, 140, 0.3);
+      margin-bottom: 15px;
+    }
+
+    .btn-generate:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(41, 196, 140, 0.5);
+    }
+
+    .btn-generate:active:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .btn-generate:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .btn-copy {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: none;
+    }
+
+    .btn-copy:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .spinner {
+      width: 45px;
+      height: 45px;
+      border: 4px solid rgba(41, 196, 140, 0.2);
+      border-radius: 50%;
+      border-top-color: #29c48c;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    .loading-text {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
+    }
+
+    .code-box {
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 15px;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .code-box.has-code {
+      border-color: rgba(41, 196, 140, 0.5);
+      background: rgba(41, 196, 140, 0.05);
+    }
+
+    .code-box.has-error {
+      border-color: rgba(255, 107, 107, 0.5);
+      background: rgba(255, 107, 107, 0.05);
+    }
+
+    .code-placeholder {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 14px;
+    }
+
+    .code-value {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #29c48c;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .code-value i {
+      font-size: 22px;
+    }
+
+    .error-value {
+      color: #ff6b6b;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-text {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(150px);
+      background: #29c48c;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 50px;
+      font-weight: 500;
+      box-shadow: 0 10px 40px rgba(41, 196, 140, 0.4);
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      z-index: 1000;
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast.error {
+      background: #ff6b6b;
+    }
+
+    @media (max-width: 580px) {
+      .card {
+        padding: 35px 20px;
+        border-radius: 25px;
+      }
+      .title {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-gradient"></div>
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+
+  <div class="container">
+    <div class="card">
+      <div class="header">
+        <div class="logo-container">
+          <div class="logo-ring"></div>
+          <div class="logo">
+            <i class="fas fa-robot"></i>
+          </div>
+        </div>
+        <h1 class="title">ZORAIB-MD</h1>
+        <p class="subtitle">Generate Pairing Code</p>
+      </div>
+
+      <div class="info-box">
+        <i class="fas fa-info-circle"></i>
+        <div class="info-box-text">
+          <strong>Quick Setup</strong>
+          <p>Enter your WhatsApp number to instantly generate a pairing code for ZORAIB-MD</p>
+        </div>
+      </div>
+
+      <form id="pairForm">
+        <div class="form-group">
+          <label class="label">WhatsApp Number</label>
+          <div class="input-wrapper">
+            <input 
+              type="tel" 
+              id="phoneNumber" 
+              class="input" 
+              placeholder="92342758xxxxx"
+              pattern="[0-9]+"
+              required
+            >
+            <i class="fas fa-phone input-icon"></i>
+          </div>
+          <div class="hint">
+            <i class="fas fa-lightbulb"></i>
+            Include country code (e.g., 92 for Pakistan)
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-generate" id="generateBtn">
+          <i class="fas fa-key"></i>
+          Generate Pair Code
+        </button>
+
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          <p class="loading-text">Generating your pair code...</p>
+        </div>
+
+        <div class="code-box" id="codeBox">
+          <div class="code-placeholder">Your pairing code will appear here</div>
+        </div>
+
+        <button type="button" class="btn btn-copy" id="copyBtn">
+          <i class="fas fa-copy"></i>
+          Copy Code
+        </button>
+      </form>
+
+      <div class="footer">
+        <p class="footer-text">
+          © 2026 ZORAIB-MD | Powered By Zoraib TechX
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span>Code copied successfully</span>
+  </div>
+
+  <script>
+    // DOM Elements
+    const phoneInput = document.getElementById('phoneNumber');
+    const generateBtn
